@@ -1,8 +1,8 @@
 
 pub struct Token {
-    token_type: TokenType,
-    lexeme: String,
-    literal: Option<String>
+    pub token_type: TokenType,
+    pub lexeme: String,
+    pub literal: Option<String>
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -33,7 +33,11 @@ pub enum TokenType {
     Float,
 
     Empty,
-    Undef
+    Undef,
+
+    LineBreak,
+    CarriageReturn,
+    EoF
 }
 
 impl Token {
@@ -44,5 +48,12 @@ impl Token {
 
     pub fn new_lit(token_type: TokenType, lexeme: String, literal: String) -> Self {
         Self { token_type, lexeme, literal: Some(literal) }
+    }
+
+    pub fn literal_print(&self) -> String {
+        match self.literal.as_ref() {
+            Some(lit) => lit,
+            None => "null"
+        }.to_string()
     }
 }

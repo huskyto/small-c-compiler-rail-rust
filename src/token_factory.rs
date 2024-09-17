@@ -1,13 +1,13 @@
 use crate::token::{Token, TokenType};
 
 
-struct TokenFactory {
+pub struct TokenFactory {
 
 }
 
 impl TokenFactory {
     
-    fn from_lexeme(lexeme: &str) -> Result<Token, String> {
+    pub fn from_lexeme(lexeme: &str) -> Result<Token, String> {
         let token_type = Self::get_token_type(lexeme);
         if token_type == TokenType::Undef {
             Err(format!("Error: Unexpected character: {lexeme}"))
@@ -59,6 +59,11 @@ impl TokenFactory {
                 ">" => TokenType::Greater,
                 "<=" => TokenType::LessEqual,
                 ">=" => TokenType::GreaterEqual,
+
+                "\r" => TokenType::CarriageReturn,
+                "\n" => TokenType::LineBreak,
+
+                "" | "\t" | " " => TokenType::Empty,
 
                 // "" => TokenType::String,
                 // "" => TokenType::Integer,
