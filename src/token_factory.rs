@@ -50,6 +50,10 @@ impl TokenFactory {
                 "+" => TokenType::Plus,
                 "-" => TokenType::Minus,
                 "*" => TokenType::Star,
+                "/" => TokenType::Slash,
+                "." => TokenType::Dot,
+                "," => TokenType::Comma,
+                ";" => TokenType::Semicolon,
 
                 "=" => TokenType::Equals,
                 "==" => TokenType::EqualsEquals,

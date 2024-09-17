@@ -18,6 +18,10 @@ pub enum TokenType {
     Plus,
     Minus,
     Star,
+    Dot,
+    Comma,
+    Slash,
+    Semicolon,
 
     Equals,
     EqualsEquals,
@@ -53,7 +57,8 @@ impl Token {
     pub fn literal_print(&self) -> String {
         match self.literal.as_ref() {
             Some(lit) => lit,
-            None => "null"
+            // None => "null"
+            None => ""
         }.to_string()
     }
 }

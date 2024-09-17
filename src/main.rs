@@ -45,8 +45,6 @@ fn parse(code: String) -> Result<Vec<Token>, Vec<Token>> {
 }
 
 fn main() {
-    println!("Hello, world!");
-    
     let args: Vec<String> = std::env::args().collect();
     if args.get(1).unwrap_or(&"".to_string()) == "-P" {
         let filename = args.get(2).unwrap_or_else(| | std::process::exit(64));

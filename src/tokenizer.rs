@@ -46,6 +46,21 @@ impl Tokenizer {
                 return Some(1);
             }
 
+            if matches!(curr_char, '/') {
+                let next_char_opt = self.source.get(self.pointer + 1);
+                if next_char_opt.is_some() && *next_char_opt.unwrap() == '/' {
+                    let mut count = 1;
+                    let mut head_char = self.source.get(self.pointer + 1).unwrap();
+                    while !matches!(head_char, '\r' | '\n') && self.pointer + count < self.source.len() {
+                        count += 1;
+                        head_char = self.source.get(self.pointer + count).unwrap_or(&' ');
+                    }
+                    return Some(count);
+                }
+
+                return Some(1);
+            }
+
             if matches!(curr_char, '"') {
                 let mut count = 1;
                 let mut head_char = self.source.get(self.pointer + 1).unwrap();
