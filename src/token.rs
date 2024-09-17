@@ -31,10 +31,19 @@ pub enum TokenType {
     Greater,
     LessEqual,
     GreaterEqual,
+    And,
+    DoubleAnd,
+    Pipe,
+    DoublePipe,
+    PlusPlus,
+    MinusMinus,
+    Sharp,
 
     String,
     Integer,
     Float,
+
+    Identifier,
 
     Empty,
     Undef,

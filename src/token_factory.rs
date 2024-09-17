@@ -32,12 +32,17 @@ impl TokenFactory {
         else if lexeme.starts_with("\"") {
             TokenType::String
         }
-        // else if lexeme.chars().next().unwrap().is_ascii_digit() {
-        //     TokenType::Number
-        // }
-        // else if lexeme.chars().next().unwrap().is_ascii_alphabetic() || lexeme.starts_with('_') {
-        //     TokenType::Identifier
-        // }
+        else if lexeme.chars().next().unwrap().is_ascii_digit() {
+            if lexeme.contains('.') {
+                TokenType::Float
+            }
+            else {
+                TokenType::Integer
+            }
+        }
+        else if lexeme.chars().next().unwrap().is_ascii_alphabetic() || lexeme.starts_with('_') {
+            TokenType::Identifier
+        }
         else {
             match lexeme {
                 "(" => TokenType::LeftParen,
@@ -63,6 +68,14 @@ impl TokenFactory {
                 ">" => TokenType::Greater,
                 "<=" => TokenType::LessEqual,
                 ">=" => TokenType::GreaterEqual,
+
+                "&" => TokenType::And,
+                "&&" => TokenType::DoubleAnd,
+                "|" => TokenType::Pipe,
+                "||" => TokenType::DoublePipe,
+                "++" => TokenType::PlusPlus,
+                "--" => TokenType::MinusMinus,
+                "#" => TokenType::Sharp,
 
                 "\r" => TokenType::CarriageReturn,
                 "\n" => TokenType::LineBreak,

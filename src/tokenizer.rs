@@ -5,6 +5,14 @@ pub struct Tokenizer {
     pointer: usize
 }
 
+const SINGLES: &[char] = &['(', ')', '{', '}',
+                           '*', '.', ',', '+',
+                           '-', ';'];
+const DOUBLES: &[(char, char)] = &[('=', '='), ('!', '='),
+                                   ('>', '='), ('<', '='),
+                                   ('|', '|'), ('&', '&'),
+                                   ('+', '+'), ('-', '-')];
+
 impl Tokenizer {
 
     pub fn new(source: &str) -> Self {
@@ -29,20 +37,14 @@ impl Tokenizer {
         let curr_char_opt = self.source.get(self.pointer);
         if curr_char_opt.is_some() {
             let curr_char = *curr_char_opt.unwrap();
-            let is_single = matches!(curr_char,
-                '(' | ')' | '{' | '}' |
-                '*' | '.' | ',' | '+' |
-                '-' | ';');
-            if is_single {
-                return Some(1);
-            }
 
-            if matches!(curr_char, '=' | '!' | '>' | '<') {
-                let next_char_opt = self.source.get(self.pointer + 1);
-                if next_char_opt.is_some() && *next_char_opt.unwrap() == '=' {
+            if let Some(next_char) = self.source.get(self.pointer + 1) {
+                if DOUBLES.iter().filter(|p| p.0 == curr_char).any(|p| p.1 == *next_char) {
                     return Some(2);
                 }
+            }
 
+            if SINGLES.contains(&curr_char) {
                 return Some(1);
             }
 
@@ -57,8 +59,6 @@ impl Tokenizer {
                     }
                     return Some(count);
                 }
-
-                return Some(1);
             }
 
             if matches!(curr_char, '"') {
