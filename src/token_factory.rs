@@ -5,6 +5,10 @@ pub struct TokenFactory {
 
 }
 
+const KEYWORDS: &[&str] = &["auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else", "enum",
+                           "extern", "float", "for", "goto", "if", "int", "long", "register", "return", "short", "signed",
+                           "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"];
+
 impl TokenFactory {
     
     pub fn from_lexeme(lexeme: &str) -> Result<Token, String> {
