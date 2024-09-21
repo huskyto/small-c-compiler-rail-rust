@@ -1,48 +1,12 @@
 
-mod token;
-mod token_factory;
-mod tokenizer;
+mod model;
+mod parser;
 
 use std::fs;
 
-use token::Token;
-use token::TokenType;
-use token_factory::TokenFactory;
-use tokenizer::Tokenizer;
-
-fn parse(code: String) -> Result<Vec<Token>, Vec<Token>> {
-    let mut res:Vec<Token> = vec![];
-    let mut has_errors = false;
-    let mut line_number = 1;
-
-    let mut tokenizer = Tokenizer::new(&code);
-    while let Some(lexeme) = tokenizer.next_token() {
-        match TokenFactory::from_lexeme(&lexeme) {
-            Ok(token) => {
-                if token.token_type == TokenType::Empty {
-                    continue;
-                };
-                if token.token_type == TokenType::LineBreak {
-                    line_number += 1;
-                };
-                res.push(token);
-            },
-            Err(error) => {
-                eprintln!("[Line {line_number}] {error}");
-                has_errors = true;
-            }
-        }
-    }
-
-    res.push(Token { token_type: TokenType::EoF, lexeme: "".to_string(), literal: None});
-
-    if has_errors {
-        Err(res)
-    }
-    else {
-        Ok(res)
-    }
-}
+use parser::Parser;
+// use parser::token::Token;
+use parser::token::TokenType;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -52,7 +16,7 @@ fn main() {
 
         // println!("{contents}");
         if !file_contents.is_empty() {
-            let tokens_res = parse(file_contents.to_string());
+            let tokens_res = Parser::parse(file_contents.to_string());
             let mut has_errors = false;
             let tokens = match tokens_res {
                 Ok(ts) => ts,

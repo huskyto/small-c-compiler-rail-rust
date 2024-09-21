@@ -1,5 +1,5 @@
-use crate::token::{Token, TokenType};
 
+use super::token::{Token, TokenType};
 
 pub struct TokenFactory {
 
