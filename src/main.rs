@@ -1,9 +1,11 @@
 
 mod model;
 mod parser;
+mod keywords;
 
 use std::fs;
 
+use model::Model;
 use parser::Parser;
 // use parser::token::Token;
 use parser::token::TokenType;
@@ -44,6 +46,31 @@ fn main() {
         }
         else {
             println!("EOF null")
+        }
+    }
+    else if args.get(1).unwrap_or(&"".to_string()) == "-M" {
+        let filename = args.get(2).unwrap_or_else(| | std::process::exit(64));
+        let file_contents = fs::read_to_string(filename).expect("IO error");
+
+        // println!("{contents}");
+        if !file_contents.is_empty() {
+            let tokens_res = Parser::parse(file_contents.to_string());
+            match tokens_res {
+                Ok(ts) => {
+                    match Model::to_model(ts) {
+                        Ok(env) => {
+                            println!("Model: {:?}", env);
+                        },
+                        Err(e) => { 
+                            println!("Model creation error: {e}");
+                            // handle error
+                        },
+                    }
+                },
+                Err(_) => {
+                    // handle error
+                }
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
 
+#[derive(Debug)]
 pub struct Token {
     pub token_type: TokenType,
     pub lexeme: String,
@@ -40,10 +41,12 @@ pub enum TokenType {
     Sharp,
 
     String,
+    // IncludeString,
     Integer,
     Float,
 
     Identifier,
+    Keyword,
 
     Empty,
     Undef,
