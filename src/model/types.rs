@@ -1,16 +1,11 @@
 
-use std::iter::Map;
+use std::collections::HashMap;
 
 #[derive(Debug)]
 pub struct Environment {
-    classes: Vec<Class>,
-    env_vars: Map<String, String>
-}
-
-#[derive(Debug)]
-pub struct Class {
-    properties: Vec<Property>, // ??
-    functions: Vec<Function>
+    pub functions: Vec<Function>,
+    pub imports: Vec<String>,   // placeholder
+    pub env_vars: HashMap<String, String>
 }
 
 #[derive(Debug)]
@@ -27,10 +22,22 @@ pub struct Property {
 
 #[derive(Debug)]
 pub struct Variable {
-
+    var_type: VarType
 }
 
 #[derive(Debug)]
 pub struct Statement {
     // ?? I'm too dumb for this :)
+}
+
+#[derive(Debug)]
+pub struct VarType {
+    lexeme: String
+    // differentiate void, primitive or other type (are there other types?)
+}
+
+impl Environment {
+    pub fn new() -> Self {
+        Self { functions: vec![], imports: vec![], env_vars: HashMap::new() }
+    }
 }

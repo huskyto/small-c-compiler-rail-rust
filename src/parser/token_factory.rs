@@ -7,7 +7,7 @@ pub struct TokenFactory {
 
 const KEYWORDS: &[&str] = &["auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else", "enum",
                            "extern", "float", "for", "goto", "if", "int", "long", "register", "return", "short", "signed",
-                           "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"];
+                           "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while", "include"];
 
 impl TokenFactory {
     
@@ -45,7 +45,12 @@ impl TokenFactory {
             }
         }
         else if lexeme.chars().next().unwrap().is_ascii_alphabetic() || lexeme.starts_with('_') {
-            TokenType::Identifier
+            if KEYWORDS.contains(&lexeme) {
+                TokenType::Keyword
+            }
+            else {
+                TokenType::Identifier
+            }
         }
         else {
             match lexeme {
